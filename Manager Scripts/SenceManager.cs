@@ -12,8 +12,9 @@ public class SenceManager : MonoBehaviour,Isaveable
     {
         Isaveable saveable = this;
         saveable.SaveableRegister();
-        //(SceneTrasionRoutain(string.Empty, "Menu"));
+        //StartCoroutine(SceneTrasionRoutain(string.Empty, "Menu"));
         SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Additive);
+        
     }
     private void OnEnable()
     {

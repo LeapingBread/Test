@@ -25,4 +25,14 @@ public class EventHandler
     {
         StartNewGameEvent?.Invoke();
     }
+    public static event Action<AudioName> PlaySoundEvent;
+    public static void CallPlaySoundEvent(AudioName audioName)
+    {
+        PlaySoundEvent?.Invoke(audioName);
+    }
+    public static event Action<AudioDitals> InitSoundEffectEvent;
+    public static void CallInitSoundEffectEvent(AudioDitals audioDitals)
+    {
+        InitSoundEffectEvent?.Invoke(audioDitals);
+    }
 }

@@ -8,8 +8,9 @@ public class CursorManager : Singleton<CursorManager>
 { 
    Vector3 mouseOnWorldPos => Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,0));
     bool getPoint;
-    [SerializeField] public Point lastPoint;
-    [SerializeField] public Point currentPoint;
+    [Header("Sound")]
+    [SerializeField] AudioName clickPointSoundFX;
+    [Header("DrawLine")]
     [SerializeField]LineRenderer linePerfeb;
     Transform lineParent;
     [SerializeField] float animationDuration;
@@ -19,8 +20,11 @@ public class CursorManager : Singleton<CursorManager>
     public Point firstPoint;
     [HideInInspector]
     public Point endPoint;
-
-
+    [HideInInspector]
+    public Point lastPoint;
+    [HideInInspector]
+    public Point currentPoint;
+    [HideInInspector]
     public bool levelPass;
 
     private void OnEnable()
@@ -53,6 +57,7 @@ public class CursorManager : Singleton<CursorManager>
         getPoint = ClickedObject();
         if(getPoint&& Input.GetMouseButtonDown(0))
         {
+            
             Clicked(ClickedObject().gameObject);
             if (firstPoint != null && endPoint != null)
             {
@@ -93,10 +98,12 @@ public class CursorManager : Singleton<CursorManager>
         {
             case "Point":
                
-                    var point = clickedObject.GetComponent<Point>();
+                var point = clickedObject.GetComponent<Point>();
                     if (point != null && point.canClick)
                     {
-                        point.FadeOut();
+                    if (clickPointSoundFX != AudioName.None)
+                        EventHandler.CallPlaySoundEvent(clickPointSoundFX);
+                    point.FadeOut();
                         currentPoint = point.GetCurrentClikedPoint();
                         if (currentPoint.previousPoint != null)
                             lastPoint = currentPoint.previousPoint;
